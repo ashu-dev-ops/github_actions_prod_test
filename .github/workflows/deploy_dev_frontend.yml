@@ -26,10 +26,9 @@ jobs:
           ls -la   # Output the current directory contents for debugging
           cd ./frontEnd   # Navigate to the correct directory
           npm install
-          BASE_URL='sheetWA' npm run build
+          npm run build
 
       - name: Create/update branch from frontend build directory
         id: frontend_subtree
         run: |
-          git checkout main
-          git subtree split --branch dev_frontend --prefix frontEnd/build/
+          git subtree split --branch dev_frontend --prefix frontEnd/dist/
