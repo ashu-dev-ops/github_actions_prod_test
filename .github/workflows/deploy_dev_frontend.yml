@@ -1,4 +1,5 @@
 name: Deploy dev_frontend
+
 on:
   workflow_dispatch:
 
@@ -40,9 +41,9 @@ jobs:
 
       - name: Copy dist folder to dev_frontend branch
         run: |
-          git rm -r .   # Clear the current contents of the dev_frontend branch
-          cp -r ./frontEnd/dist/* .   # Copy contents of dist folder to dev_frontend
+          git rm -r .
+          cp -r ./frontEnd/dist/* .
           git add .
+          git reset -- frontEnd/package-lock.json   # Ignore changes to package-lock.json
           git commit -m "Update dist folder"
           git push origin dev_frontend
-
