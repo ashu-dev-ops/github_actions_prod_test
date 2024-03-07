@@ -28,10 +28,20 @@ jobs:
           npm install
           npm run build
 
-      - name: Create/update branch from frontend build directory
+      - name: Check if dev_frontend branch exists
         run: |
-          git add -f frontEnd/dist/
-          git commit -m "Update frontend build"
-          git push origin HEAD:refs/heads/dev_frontend
-         
+          if git show-ref --quiet refs/heads/dev_frontend; then
+            echo "dev_frontend branch exists"
+            git checkout dev_frontend
+          else
+            echo "dev_frontend branch does not exist"
+            git checkout -b dev_frontend
+          fi
+
+      - name: Copy dist folder to dev_frontend branch
+        run: |
+          cp -r ./dist/* ../
+          git add .
+          git commit -m "Update dist folder"
+          git push origin dev_frontend
 
