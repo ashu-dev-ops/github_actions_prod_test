@@ -30,7 +30,7 @@ jobs:
 
       - name: Create/update branch from frontend build directory
         run: |
-          git add frontEnd/dist/
+          git add -f frontEnd/dist/
           git commit -m "Update frontend build"
           git push origin HEAD:refs/heads/dev_frontend
          
