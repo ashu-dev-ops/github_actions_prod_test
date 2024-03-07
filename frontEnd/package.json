@@ -14,7 +14,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-snap": "^1.23.0"
+    "react-snap":"https://github.com/Kumar-ayush-singh/react-snap.git"
   },
   "reactSnap": {
     "source": "dist",
