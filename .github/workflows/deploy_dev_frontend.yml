@@ -21,15 +21,15 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
-      - name: Build frontend
+      - name: Build frontend with BASE_URL environment variable
         run: |
           ls -la   # Output the current directory contents for debugging
-          cd ./frontend   # Navigate to the frontend directory
+          cd ./frontEnd   # Navigate to the correct directory
           npm install
-          npm run build
+          BASE_URL='sheetWA' npm run build
 
       - name: Create/update branch from frontend build directory
         id: frontend_subtree
         run: |
           git checkout main
-          git subtree split --branch dev_frontend --prefix frontend/build/
+          git subtree split --branch dev_frontend --prefix frontEnd/build/
