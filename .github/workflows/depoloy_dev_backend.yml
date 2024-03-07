@@ -1,0 +1,29 @@
+name: Deploy dev_backend
+on: 
+    workflow_dispatch:
+jobs: 
+    create_development_branch: 
+        runs-on: ubuntu-latest
+        steps: 
+            -   uses: actions/checkout@v4
+                with: 
+                    fetch-depth: 0
+
+            -   name: setup git config
+                run: |
+                    git config user.name "GitHub Actions Bot"
+                    git config user.email "<>"
+
+            -   name: creating/updating branch from backend subdirectory
+                id: subtree
+                run: |
+                    git checkout main
+                    git subtree split --branch heroku_backend_dev --prefix backend/
+
+            -   name: checkout to development backend branch
+                run: |
+                    git checkout heroku_backend_dev
+
+            -   name: pushing demvelopment backend branch
+                run: |
+                    git push -u origin heroku_backend_dev

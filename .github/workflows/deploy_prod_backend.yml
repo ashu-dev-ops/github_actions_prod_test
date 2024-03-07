@@ -1,0 +1,28 @@
+name: Deploy prod_backend
+on: 
+    workflow_dispatch:
+jobs: 
+    create_update_production_branch: 
+        runs-on: ubuntu-latest
+        steps: 
+            -   uses: actions/checkout@v4
+                with: 
+                    fetch-depth: 0
+                    
+            -   name: setup git config
+                run: |
+                    git config user.name "GitHub Actions Bot"
+                    git config user.email "<>"
+
+            -   name: creating/updating production backend branch
+                run: |
+                    git checkout prod_main
+                    git subtree split --branch heroku_backend_prod --prefix backend/
+            
+            -   name: checkout to production backend branch
+                run: |
+                    git checkout heroku_backend_prod
+
+            -   name: pushing production backend branch
+                run: |
+                    git push -u origin heroku_backend_prod

@@ -1,0 +1,51 @@
+name: Update prod_main branch
+on: 
+    workflow_dispatch:
+jobs: 
+    create_development_branch: 
+        runs-on: ubuntu-latest
+        steps: 
+            -   uses: actions/checkout@v4
+                with: 
+                    fetch-depth: 0
+                    
+            -   name: setup git config
+                run: |
+                    git config user.name "GitHub Actions Bot"
+                    git config user.email "<>"
+
+            -   name: set up node
+                uses: actions/setup-node@v4
+                with:
+                    node-version: '18'
+    
+            -   name: Get extension version
+                run: echo ext_ver=$(node -pe "require('./chrome_extension/package.json').version") >> $GITHUB_ENV
+            -   name: Get frontend version
+                run: echo frontend_ver=$(node -pe "require('./frontend/package.json').version") >> $GITHUB_ENV
+            -   name: Get backend version
+                run: echo backend_ver=$(node -pe "require('./backend/package.json').version") >> $GITHUB_ENV
+
+            -   name: Get initial commit of main
+                run: echo initial_commit_sha=$(git rev-list --max-parents=0 HEAD) >> $GITHUB_ENV
+
+            -   name: Print versions
+                run: echo "extension@v$ext_ver frontend@v$frontend_ver backend@v$backend_ver"
+
+            -   name: Checkout to prod_main branch if exist else create prod_main brnach
+                run: |
+                    if ! (git show-ref --verify --quiet "refs/heads/prod_main"); then
+                        echo "creating new branch prod_main"
+                        git checkout -b prod_main
+                        echo $initial_commit_sha
+                        git reset --hard $initial_commit_sha
+                    else
+                        echo "prod_main already exist"
+                        git checkout prod_main
+                    fi
+
+            -   name: merge and squash changes to prod_main
+                run: |
+                    git merge main --squash
+                    git commit -m "extension@v$ext_ver frontend@v$frontend_ver backend@v$backend_ver"
+                    git push -u origin prod_main
