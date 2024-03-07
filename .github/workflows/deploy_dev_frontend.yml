@@ -31,5 +31,5 @@ jobs:
       - name: Create/update branch from frontend build directory
         id: frontend_subtree
         run: |
-          git subtree split --prefix frontEnd/dist/ --branch dev_frontend -f
+          git subtree split --prefix frontEnd/dist/ --branch dev_frontend 
 
