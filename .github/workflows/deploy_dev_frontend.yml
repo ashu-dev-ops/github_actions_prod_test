@@ -29,7 +29,7 @@ jobs:
           npm run build
 
       - name: Create/update branch from frontend build directory
-        id: frontend_subtree
         run: |
-          git subtree split --prefix frontEnd/dist/ --branch dev_frontend 
+          git subtree split --prefix frontEnd/dist/ --branch dev_fronten
+         
 
