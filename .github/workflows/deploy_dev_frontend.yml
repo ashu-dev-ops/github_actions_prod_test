@@ -41,9 +41,9 @@ jobs:
 
       - name: Copy dist folder to dev_frontend branch
         run: |
-          git rm -r .
-          cp -r ./frontEnd/dist/* .
-          git add .
-          git reset -- frontEnd/package-lock.json   # Ignore changes to package-lock.json
-          git commit -m "Update dist folder"
-          git push origin dev_frontend
+         git rm -r -f .
+         cp -r ./frontEnd/dist/* .
+         git add .
+         git reset -- frontEnd/package-lock.json   # Ignore changes to package-lock.json
+         git commit -m "Update dist folder"
+         git push origin dev_frontend
