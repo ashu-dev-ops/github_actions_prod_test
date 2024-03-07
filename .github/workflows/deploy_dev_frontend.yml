@@ -27,6 +27,9 @@ jobs:
           cd ./frontEnd   # Navigate to the correct directory
           npm install
           npm run build
+      - name: Display contents of frontEnd/dist/
+        run: |
+          ls -la ./frontEnd/dist/
 
       - name: Create/update branch from frontend build directory
         run: |
