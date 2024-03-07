@@ -1,5 +1,4 @@
 name: Deploy dev_frontend
-
 on:
   workflow_dispatch:
 
@@ -29,21 +28,6 @@ jobs:
           npm install
           npm run build
 
-      - name: Check if dev_frontend branch exists
+      - name: Create/update branch from frontend build directory
         run: |
-          if git show-ref --quiet refs/heads/dev_frontend; then
-            echo "dev_frontend branch exists"
-            git checkout dev_frontend
-          else
-            echo "dev_frontend branch does not exist"
-            git checkout -b dev_frontend
-          fi
-
-      - name: Copy dist folder to dev_frontend branch
-        run: |
-         git rm -r -f .
-         cp -r ./frontEnd/dist/* .
-         git add .
-         git reset -- frontEnd/package-lock.json   # Ignore changes to package-lock.json
-         git commit -m "Update dist folder"
-         git push origin dev_frontend
+          git subtree split --prefix frontEnd/dist/ --branch dev_frontend
