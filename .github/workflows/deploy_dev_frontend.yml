@@ -23,7 +23,8 @@ jobs:
 
       - name: Build frontend
         run: |
-          cd frontend
+          ls -la   # Output the current directory contents for debugging
+          cd ./frontend   # Navigate to the frontend directory
           npm install
           npm run build
 
