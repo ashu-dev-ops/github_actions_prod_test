@@ -30,6 +30,8 @@ jobs:
 
       - name: Create/update branch from frontend build directory
         run: |
-          git subtree split --prefix frontEnd/dist/ --branch dev_fronten
+          git add frontEnd/dist/
+          git commit -m "Update frontend build"
+          git push origin HEAD:refs/heads/dev_frontend
          
 
