@@ -27,6 +27,8 @@ jobs:
           cd ./frontEnd   # Navigate to the correct directory
           npm install
           npm run build
+          git add .
+          git commit -m"build succeeded "
       - name: Display contents of frontEnd/dist/
         run: |
           ls -la ./frontEnd/dist/
